@@ -49,7 +49,6 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git cabal ssh-agent)
-zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 source $ZSH/oh-my-zsh.sh
 
@@ -57,6 +56,15 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH=$HOME/.cabal/bin:$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
+
+# Enable ssh-agent.
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+
+# Prevent `git status` on every prompt (fixes slow prompt).
+function git_prompt_info() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}${ZSH_THEME_GIT_PROMPT_CLEAN}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
+}
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
