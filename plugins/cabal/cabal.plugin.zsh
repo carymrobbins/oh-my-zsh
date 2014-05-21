@@ -11,7 +11,7 @@ function cabal_sandbox_info() {
 
 function _cabal_commands() {
     # Ensure cabal exists.
-    command -v cabal || return
+    command -v cabal > /dev/null || return
     local ret=1 state
     _arguments ':subcommand:->subcommand' && ret=0
 
