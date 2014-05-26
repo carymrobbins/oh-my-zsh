@@ -54,7 +54,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$HOME/.cabal/bin:$HOME/bin:/usr/local/bin:$PATH
+# Use ~/.path to manage the PATH variable.  Each path should be on a new line.
+export PATH=$((while read x; do echo -n "$x:"; done < $HOME/.path) 2> /dev/null || echo "")$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Prevent `git status` on every prompt (fixes slow prompt).
