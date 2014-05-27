@@ -48,14 +48,15 @@ DISABLE_AUTO_TITLE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git cabal)
+plugins=(git cabal ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # Use ~/.path to manage the PATH variable.  Each path should be on a new line.
-export PATH=$((while read x; do echo -n "$x:"; done < $HOME/.path) 2> /dev/null || echo "")$HOME/bin:/usr/local/bin:$PATH
+CUSTOM_PATH=$((while read x; do echo -n "$x:"; done < $HOME/.path) 2> /dev/null || echo "")
+export PATH=$CUSTOM_PATH:$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Prevent `git status` on every prompt (fixes slow prompt).
@@ -63,6 +64,9 @@ function git_prompt_info() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}${ZSH_THEME_GIT_PROMPT_CLEAN}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
 }
+
+# Allow end-of-line comments (i.e. `echo foo # bar` should echo "foo", not "foo # bar")
+setopt interactivecomments
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
