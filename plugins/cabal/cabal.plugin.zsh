@@ -10,34 +10,37 @@ function cabal_sandbox_info() {
 }
 
 function _cabal_commands() {
+    # Ensure cabal exists.
+    command -v cabal > /dev/null || return
     local ret=1 state
     _arguments ':subcommand:->subcommand' && ret=0
 
     case $state in
       subcommand)
         subcommands=(
-          "bench:Run the benchmark, if any (configure with UserHooks)"
-          "build:Make this package ready for installation"
-          "check:Check the package for common mistakes"
-          "clean:Clean up after a build"
-          "copy:Copy teh files into the install locations"
-          "configure:Prepare to build the package"
-          "fetch:Downloads packages for later installation"
-          "haddock:Generate HAddock HTML documentation"
-          "help:Help about commands"
-          "hscolour:Generate HsColour colourised code, in HTML format"
-          "info:Display detailed information about a particular package"
-          "init:Interactively create a .cabal file"
-          "install:Installs a list of packages"
-          "list:List packages matching a search string"
-          "register:Register this package with the compiler"
-          "report:Upload build reports to a remote server"
-          "sdist:Generate a source distribution file (.tar.gz)"
-          "test:Run the test suite, if any (configure with UserHooks)"
-          "unpack:Unpacks packages for user inspection"
-          "update:Updates list of known packages"
-          "upload:Uploads source packages to Hackage"
+            "--help:Show help text."
+            "--version:Print version information."
         )
+        for x in $(cabal --list | grep '^[a-z]'); do
+            description=$(
+                # Grep for command.
+                cabal --help | grep "^  $x" | \
+                # Escape quotes.
+                sed "s/'/\\\\'/g" | sed "s/\"/\\\\\"/g" | \
+                # Split on contiguous space and slice from 2nd item onwards.
+                xargs | cut -d ' ' -f 2-)
+            subcommands+=("$x:$description")
+        done
+        for x in $(cabal --list | grep '^\-\-'); do
+            description=$(
+                # Grep for flag, escaping flag dashes.
+                cabal --help | grep "^    $(echo $x | sed 's/-/\\-/g')" | \
+                # Split on contiguous space and slice from 2nd item onwards.
+                xargs | cut -d ' ' -f 2-)
+            if [ "$description" != "" ]; then
+                subcommands+=("$x:$description")
+            fi
+        done
         _describe -t subcommands 'cabal subcommands' subcommands && ret=0
     esac
 
