@@ -55,8 +55,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Use ~/.path to manage the PATH variable.  Each path should be on a new line.
-CUSTOM_PATH=$((while read x; do echo -n "$x:"; done < $HOME/.path) 2> /dev/null || echo "")
-export PATH=$CUSTOM_PATH:$HOME/bin:/usr/local/bin:$PATH
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Prevent `git status` on every prompt (fixes slow prompt).
