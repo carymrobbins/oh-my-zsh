@@ -1,3 +1,4 @@
 $HOME/bin
+.cabal-sandbox/bin
 $HOME/.cabal/bin
 /usr/local/bin
