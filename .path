@@ -1,4 +1,5 @@
 $HOME/bin
 .cabal-sandbox/bin
 $HOME/.cabal/bin
+$HOME/Library/Haskell/bin
 /usr/local/bin
