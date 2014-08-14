@@ -48,7 +48,7 @@ DISABLE_AUTO_TITLE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(cabal fabric git last-working-dir path ssh-agent)
+plugins=(cabal fabric git last-working-dir path ssh-agent virtualenv virtualenvwrapper)
 
 source $ZSH/oh-my-zsh.sh
 
