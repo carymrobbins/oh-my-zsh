@@ -15,7 +15,14 @@ function reload_path() {
     else
         export ORIGINAL_PATH=$PATH
     fi
-    export CUSTOM_PATH=$(eval echo $((while read x; do echo -n "$x:"; done < $HOME/.path) 2> /dev/null || echo ""))
+    # Evaluate parts of the path line by line from ~/.path
+    # expanding $variables and globs (*)
+    export CUSTOM_PATH=$(
+      while read x; do
+        eval echo -n "$x"
+        echo -n ':'
+      done < $HOME/.path
+    )
     # CUSTOM_PATH ends with a trailing colon (:) so no need to provide it here.
     export PATH=${CUSTOM_PATH}${ORIGINAL_PATH}
 }
