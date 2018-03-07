@@ -1,7 +1,15 @@
 local retStatus="%(?:%{$fg_bold[green]%}✔:%{$fg_bold[red]%}✘%s)"
 
-PROMPT='%{$fg[blue]%}${(r:$COLUMNS::─:)}%{$reset_color%}
+PROMPT_DEFAULT='%{$fg[blue]%}${(r:$COLUMNS::─:)}%{$reset_color%}
 ${retStatus}%{$fg_bold[green]%} %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}%{$fg[magenta]%}%% %{$reset_color%}'
+
+PROMPT=$PROMPT_DEFAULT
+
+PROMPT_SIMPLE='
+%{$fg[magenta]%}%% %{$reset_color%}'
+
+alias prs='PROMPT=$PROMPT_SIMPLE'
+alias prd='PROMPT=$PROMPT_DEFAULT'
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[cyan]%}⅄ %{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
